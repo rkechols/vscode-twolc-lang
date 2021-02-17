@@ -1,0 +1,63 @@
+!! =================================== !
+!! The Quenya morphophonological/twol rules file !
+!! =================================== !
+
+Alphabet
+    a b c d e f g h i j k l m n o p q r s t u v w x y
+    á é í ó ú ä ë ï ö ü þ ñ %{w%}
+
+    A B C D E F G H I J K L M N O P Q R S T U V W X Y
+    Á É Í Ó Ú Ä Ë Ï Ö Ü Þ Ñ
+
+    ! things to automatically convert (unless otherwise specified below)
+    %>:0
+
+    %{stemd20%}:d %{stemt20%}:t %{stemm2n%}:m %{stems20%}:s %{stemn20%}:n
+    %{stemu2o%}:u
+    %{steme2é%}:e %{stemi2í%}:i
+
+    %{%-V%}:0
+    %{L%}:l
+
+    %{strongi%}:i
+
+;
+
+Sets
+    Vowel = a e i o u á é í ó ú ä ë ï ö ü
+            A E I O U Á É Í Ó Ú Ä Ë Ï Ö Ü ;
+    Consonant = b c d f g h j k l m n ñ p q r s t v w x y þ %{w%}
+                B C D F G H J K L M N Ñ P Q R S T V W X Y Þ ;
+
+Rules
+
+"Convert cu-/co to qu when followed by a vowel"
+    c:q <=> _ %{stemu2o%}:u :0* :Vowel ;
+
+"Deleting a short vowel from a triggered deletion"  ! {strongi} should not be included here
+    [ a:0 | e:0 | i:0 | o:0 | u:0 ] <=> _ :0* %{%-V%}: ;
+
+"A 'strong i' is deleted if followed by another i"
+    %{strongi%}:0 <=> _ :0* :i ;
+
+"Stems that alter when no suffix is attached"
+    [ %{stemd20%}:0 | %{stemt20%}:0 | %{stems20%}:0 | %{stemn20%}:0 |
+      %{stemm2n%}:n | %{stemu2o%}:o | %{steme2é%}:é | %{stemi2í%}:í ]
+        <=> _ [\%>:]* %>: # ;
+
+"Assimilate r to l when at a morpheme boundary"
+    r:l <=> _ %>: %{L%}: ;
+"Optionally assimilate n,s to l when at a morpheme boundary"
+    [ n:l | s:l ] => _ %>: %{L%}: ;
+
+"Morpheme boundary turns into e if the l didn't cause assimilation"
+    %>:e <=> [:Consonant - :l] _ %{L%}: ;
+
+"Morpheme boundary optionally turns into e if the l was always l"
+    %>:e => l _ %{L%}: ;
+
+"Morpheme boundary turns into an e when surrounded by consonants"
+    %>:e <= :Consonant _ :Consonant ; !! for syntax highlighting
+
+! "But it can turn into 0 still when the environment is Vn>nV"
+    ! %>:0 => :Vowel :n _ :n :Vowel ;

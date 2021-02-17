@@ -2,100 +2,65 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "twolc",
 	"patterns": [
-		{ "include": "#end" },
-		{ "include": "#comments" },
-		{ "include": "#keywords" },
-		{ "include": "#lexicons" },
-		{ "include": "#escapes" },
-		{ "include": "#regexps"},
-		{ "include": "#strings"},
-		{ "include": "#constants"},
-		{ "include": "#flagDiacritics" }
+		{ "include": "#basics" },
+		{ "include": "#sections" },
+		{ "include": "#variables" },
+		{ "include": "#rules" }
 	],
 	"repository": {
-		"comments": {
-			"patterns": [{
-				"name": "comment.line.exclamation-mark.twolc",
-				"match": "!.*"
-			}]
-		},
-		"escapes": {
-			"patterns": [{
-				"name": "constant.character.escape.twolc",
-				"match": "%."
-			}]
-		},
-		"lexicons": {
+		"basics": {
 			"patterns": [
 				{
-					"name": "meta.lexicon.twolc",
-					"match": "\\b(LEXICON)\\b\\s*(?:(Root)|(\\w+)|)\\s*(;)?",
-					"captures": {
-						"1": { "name": "storage.type.twolc" },
-						"2": { "name": "variable.language.twolc" },
-						"3": { "name": "entity.name.type.twolc" },
-						"4": { "name": "invalid.illegal.twolc" }
-					}
-				}
-			]
-		},
-		"keywords": {
-			"patterns": [
-				{
-					"name": "keyword.control.twolc",
-					"match": "\\b(ALPHABET|Alphabet|Sets|Rules|Multichar_Symbols)\\b"
+					"name": "comment.line.exclamation-mark.twolc",
+					"match": "!.*"
 				},
-				{
-					"name": "keyword.operator.twolc",
-					"match": "[:.?*^]"
-				}
-			]
-		},
-		"end": {
-			"begin": "\\bEND\\s*\\n?",
-			"beginCaptures": { "0": { "name": "keyword.control.twolc" } },
-			"contentName": "comment.block.documentation.twolc",
-			"end": "\\z"
-		},
-		"strings": {
-			"name": "string.quoted.double.twolc",
-			"begin": "\"",
-			"end": "\""
-		},
-		"constants": {
-			"patterns": [{
-				"name": "variable.language.twolc",
-				"match": "#"
-			}]
-		},
-		"flagDiacritics": {
-			"patterns": [{
-				"name": "variable.other.twolc",
-				"begin": "@",
-				"end": "@",
-				"patterns": [
-					{ "match": "U[.]\\w+[.]\\w+" },
-					{ "match": "C[.]\\w+" },
-					{ "match": "D[.]\\w+(?:[.]\\w+)?" },
-					{ "match": "P[.]\\w+[.]\\w+" },
-					{ "match": "R[.]\\w+(?:[.]\\w+)?" },
-					{ "match": "N[.]\\w+[.]\\w+" },
-					{ "match": "E[.]\\w+[.]\\w+" },
-					{
-						"match": "[^@]+",
-						"name": "invalid.illegal.twolc"
-					}
-				]
-			}]
-		},
-		"regexps": {
-			"name": "string.quoted.regexp.twolc",
-			"begin": "<",
-			"end": ">",
-			"patterns": [
 				{
 					"name": "constant.character.escape.twolc",
 					"match": "%."
+				},
+				{
+					"name": "keyword.other.twolc",
+					"match": "\\.#\\.|#|\\$|&|~|\\+|-|:|\\?|\\*|\\^|\\\\|/|\\{|\\}"
+				},
+				{
+					"name": "invalid.illegal.twolc",
+					"match": "\\.#"
+				}
+			]
+		},
+		"sections": {
+			"patterns": [
+				{
+					"name": "keyword.control.section.twolc",
+					"match": "\\b(?:Alphabet|Sets|Definitions|Diacritics|Rules)\\b"
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "meta.set.twolc",
+					"begin": "([a-zA-Z0-9_]+)\\s+=\\s+",
+					"beginCaptures": { "1": { "name": "variable.other.twolc" } },
+					"end": ";",
+					"patterns": [{ "include": "#basics" }]
+				}
+			]
+		},
+		"rules": {
+			"patterns": [
+				{
+					"name": "keyword.control.rule.twolc",
+					"match": "\\b(?:where|in|matched|mixed)\\b"
+				},
+				{
+					"name": "entity.name.rule.twolc",
+					"match": "\".*\"",
+					"captures": { "0": { "name": "string.quoted.double.twolc" } }
+				},
+				{
+					"name": "keyword.other.rule.operator.twolc",
+					"match": "<=>|=>|<=|/<="
 				}
 			]
 		}
