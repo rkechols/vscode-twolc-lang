@@ -7,12 +7,14 @@ Provides syntax highlighting for the `twolc` two-level rule compiler language, u
 
 ![Example of twolc syntax highlighting](./images/twolc-highlighting-example.png)
 
-TODO: Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+<!-- TODO: Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file. -->
 
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+<!-- Calling out known issues can help limit users opening duplicate issues against your extension. -->
+
+Only declarations of Definitions and Sets are highlighed, not references after declaration.
 
 ## Release Notes
 
