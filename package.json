@@ -1,0 +1,25 @@
+{
+    "name": "twolc-lang",
+    "displayName": "Twolc lang",
+    "description": "Syntax highlighting for .twolc files",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.53.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "twolc",
+            "aliases": ["Twolc", "twolc"],
+            "extensions": [".twolc",".twol"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "twolc",
+            "scopeName": "source.twolc",
+            "path": "./syntaxes/twolc.tmLanguage.json"
+        }]
+    }
+}
