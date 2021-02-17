@@ -20,6 +20,6 @@ Only declarations of Definitions and Sets are highlighed, not references after d
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
 Initial release
