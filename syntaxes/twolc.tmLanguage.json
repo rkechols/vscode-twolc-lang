@@ -1,29 +1,101 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "Twolc",
+	"name": "twolc",
 	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		}
+		{ "include": "#end" },
+		{ "include": "#comments" },
+		{ "include": "#keywords" },
+		{ "include": "#lexicons" },
+		{ "include": "#escapes" },
+		{ "include": "#regexps"},
+		{ "include": "#strings"},
+		{ "include": "#constants"},
+		{ "include": "#flagDiacritics" }
 	],
 	"repository": {
-		"keywords": {
+		"comments": {
 			"patterns": [{
-				"name": "keyword.control.twolc",
-				"match": "\\b(if|while|for|return)\\b"
+				"name": "comment.line.exclamation-mark.twolc",
+				"match": "!.*"
 			}]
+		},
+		"escapes": {
+			"patterns": [{
+				"name": "constant.character.escape.twolc",
+				"match": "%."
+			}]
+		},
+		"lexicons": {
+			"patterns": [
+				{
+					"name": "meta.lexicon.twolc",
+					"match": "\\b(LEXICON)\\b\\s*(?:(Root)|(\\w+)|)\\s*(;)?",
+					"captures": {
+						"1": { "name": "storage.type.twolc" },
+						"2": { "name": "variable.language.twolc" },
+						"3": { "name": "entity.name.type.twolc" },
+						"4": { "name": "invalid.illegal.twolc" }
+					}
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.twolc",
+					"match": "\\b(ALPHABET|Alphabet|Sets|Rules|Multichar_Symbols)\\b"
+				},
+				{
+					"name": "keyword.operator.twolc",
+					"match": "[:.?*^]"
+				}
+			]
+		},
+		"end": {
+			"begin": "\\bEND\\s*\\n?",
+			"beginCaptures": { "0": { "name": "keyword.control.twolc" } },
+			"contentName": "comment.block.documentation.twolc",
+			"end": "\\z"
 		},
 		"strings": {
 			"name": "string.quoted.double.twolc",
 			"begin": "\"",
-			"end": "\"",
+			"end": "\""
+		},
+		"constants": {
+			"patterns": [{
+				"name": "variable.language.twolc",
+				"match": "#"
+			}]
+		},
+		"flagDiacritics": {
+			"patterns": [{
+				"name": "variable.other.twolc",
+				"begin": "@",
+				"end": "@",
+				"patterns": [
+					{ "match": "U[.]\\w+[.]\\w+" },
+					{ "match": "C[.]\\w+" },
+					{ "match": "D[.]\\w+(?:[.]\\w+)?" },
+					{ "match": "P[.]\\w+[.]\\w+" },
+					{ "match": "R[.]\\w+(?:[.]\\w+)?" },
+					{ "match": "N[.]\\w+[.]\\w+" },
+					{ "match": "E[.]\\w+[.]\\w+" },
+					{
+						"match": "[^@]+",
+						"name": "invalid.illegal.twolc"
+					}
+				]
+			}]
+		},
+		"regexps": {
+			"name": "string.quoted.regexp.twolc",
+			"begin": "<",
+			"end": ">",
 			"patterns": [
 				{
 					"name": "constant.character.escape.twolc",
-					"match": "\\\\."
+					"match": "%."
 				}
 			]
 		}
