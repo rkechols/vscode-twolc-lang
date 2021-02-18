@@ -2,7 +2,7 @@
     "name": "twolc-lang",
     "displayName": "Twolc lang",
     "description": "Syntax highlighting for .twolc files",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "Echols021",
     "engines": {
         "vscode": "^1.53.0"
