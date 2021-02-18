@@ -9,6 +9,6 @@ All notable changes to the "twolc-lang" extension will be documented in this fil
 - TODO
 
 
-## [0.0.5] - 2021-02-17
+## [0.1.2] - 2021-02-17
 
 - Initial release
